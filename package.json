@@ -7,9 +7,10 @@
     "node": ">=22.18.0"
   },
   "scripts": {
-    "test": "node --test \"packages/*/test/**/*.test.ts\"",
+    "verify": "node scripts/harness/verify.mjs",
     "typecheck": "tsc -p tsconfig.json",
-    "verify": "pnpm typecheck && pnpm test"
+    "test": "node --test \"packages/*/test/**/*.test.ts\" \"scripts/ci/*.test.mjs\"",
+    "check:docs": "node scripts/ci/check-docs.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",
