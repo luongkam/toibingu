@@ -1,0 +1,10 @@
+{
+  "domains": [
+    {
+      "code": "TB",
+      "fullName": "Toibingu",
+      "description": "Toàn hệ thống Toibingu: khám phá chuyện hot ngoài feed, hồ sơ bắt kịp, biên tập, chia sẻ.",
+      "scope": ["apps/web", "apps/studio", "apps/worker", "apps/extension", "packages/*"]
+    }
+  ]
+}
