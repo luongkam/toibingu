@@ -19,7 +19,9 @@ docs/00-intake/      brief + research (đầu vào, historical)
 docs/01-rd/          requirement design (NEXA G1)
 docs/01-sd/          system design: context, architecture, nfr, integration, data, policy (NEXA G1_5)
 packages/domain/     kiểu lõi, xếp hạng, cổng xuất bản (có test)
-packages/signals/    nhận diện câu xin bối cảnh tiếng Việt (có test)
+packages/signals/    nhận diện câu xin bối cảnh, cụm "X là gì" (có test)
+packages/lexicon/    engine từ lóng / trend: trạng thái nóng, duyệt, khớp, đề xuất (có test)
+data/lexicon/        lexicon đã review + đề xuất của skill trend-scout
 apps/                web, studio, worker (P1), extension (P2): tạo khi có code (SD-TBH001 §6)
 scripts/harness/     NEXA harness: verify + hooks
 scripts/ci/          check-docs (NEXA G1/G1_5, id, trace)

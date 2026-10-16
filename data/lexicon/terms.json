@@ -1,0 +1,45 @@
+[
+  {
+    "id": "toi-bi-ngu",
+    "display": "tôi bị ngu",
+    "variants": ["t bị ngu", "tui bị ngu", "mình bị ngu", "toi bi ngu"],
+    "kind": "catchphrase",
+    "meaning": "Câu tự trào: \"tôi không hiểu chuyện này, ai giải thích giúp\". Không phải tự đánh giá nghiêm túc; người khởi xướng chưa xác minh.",
+    "communities": ["meme"],
+    "platforms": ["facebook", "threads"],
+    "firstSeenAt": "2026-10-15",
+    "review": "pending",
+    "approvedBy": null,
+    "sources": [
+      { "url": "https://www.facebook.com/kienkhongngu.vn/posts/939923138646561/", "platform": "facebook", "retrievedAt": "2026-10-15", "accessMethod": "editor_added" },
+      { "url": "https://www.threads.com/@haminhh.1999/post/DMSvb7pTqFN", "platform": "threads", "retrievedAt": "2026-10-15", "accessMethod": "editor_added" }
+    ]
+  },
+  {
+    "id": "hoi-toi-co",
+    "display": "Hội tối cổ",
+    "variants": [],
+    "accentedOnly": true,
+    "kind": "brand",
+    "meaning": "Từ khóa thương hiệu Toibingu: những người tự nhận chậm bắt trend, tham gia thử thách bắt kịp tự nguyện bằng biệt danh.",
+    "communities": ["meme"],
+    "platforms": ["web"],
+    "firstSeenAt": "2026-10-16",
+    "review": "pending",
+    "approvedBy": null,
+    "sources": []
+  },
+  {
+    "id": "thanh-thong-nao",
+    "display": "Thánh thông não",
+    "variants": ["thanh thong nao"],
+    "kind": "brand",
+    "meaning": "Từ khóa thương hiệu Toibingu: người đóng góp lời giải hữu ích, có nguồn, được người từ nhiều cộng đồng đánh giá tốt.",
+    "communities": ["meme"],
+    "platforms": ["web"],
+    "firstSeenAt": "2026-10-16",
+    "review": "pending",
+    "approvedBy": null,
+    "sources": []
+  }
+]

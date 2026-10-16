@@ -4,7 +4,7 @@ title: System Context (Bối cảnh hệ thống)
 phase: 01-sd
 status: INTERNAL_REVIEW
 depends_on: [RD-TBT001]
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # SD-TBX001 System Context
@@ -21,6 +21,7 @@ flowchart LR
   partner([Admin page đối tác\nP-PART]) -->|ghim link| reader
   editor([Biên tập viên\nP-ED]) -->|HTTPS + đăng nhập| studio
   ext([Extension P2]) -.->|HTTPS| web
+  scout([Agent trend-scout\nđề xuất lexicon]) -->|PR đề xuất| studio
   subgraph TB[Hệ thống Toibingu]
     web[Web công khai]
     studio[Studio biên tập]
@@ -30,13 +31,15 @@ flowchart LR
   end
   worker --> threads[[Threads API]]
   worker --> trends[[Google Trends RSS]]
+  worker --> yt[[YouTube Data API]]
+  worker -.-> tiktok[[TikTok / Facebook\nqua quyền được cấp]]
   worker --> llm[[LLM provider]]
   worker --> emb[[Embedding provider]]
   web --> zalo[[Zalo / Messenger\nshare + link preview]]
   google[[Google Search]] -->|crawl| web
 ```
 
-**Bên trong ranh giới:** web công khai, Studio, worker, cơ sở dữ liệu, object storage tạm cho ảnh chụp.
+**Bên trong ranh giới:** web công khai, Studio, worker, cơ sở dữ liệu, object storage tạm cho ảnh chụp, lexicon. Dữ liệu chạy trên máy local của owner; trang đã xuất bản đặt trên CDN (SD-TBH001 H-14).
 **Bên ngoài ranh giới:** mạng xã hội (chỉ qua API chính thức), Google Trends RSS, nhà cung cấp LLM và embedding, ứng dụng nhắn tin nhận link chia sẻ, máy tìm kiếm.
 
 ## 3. Actors (Tác nhân)
@@ -49,6 +52,7 @@ flowchart LR
 | Admin | Quản lý tài khoản Studio, cấu hình nguồn, trần chi phí | Đăng nhập + vai trò | NFR-08, NFR-10 |
 | Page đối tác | Dẫn link tới hồ sơ | Không (ngoài hệ thống) | K7 |
 | Extension (P2) | Gửi đoạn người dùng chủ động chọn | Không; `activeTab` | REQ-015 |
+| Agent trend-scout | Đề xuất mục lexicon kèm nguồn; không duyệt | Repo (PR) | REQ-017 |
 
 ## 4. Trust boundaries (Ranh giới tin cậy)
 

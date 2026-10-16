@@ -4,7 +4,7 @@ title: Non-functional design (Thiết kế phi chức năng)
 phase: 01-sd
 status: INTERNAL_REVIEW
 depends_on: [RD-TBT001, SD-TBH001]
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # SD-TBN001 Non-functional design
@@ -23,7 +23,7 @@ Chỉ ra cách kiến trúc (SD-TBH001) đáp ứng từng yêu cầu phi chức
 |---|---|---|---|
 | NFR-01 Truy cập | Không có middleware đăng nhập ở `apps/web`; định danh thiết bị là cookie UUID ngẫu nhiên, first-party | Test e2e: mọi route công khai trả 200 khi không có cookie | Một route công khai trả 401/302 tới login |
 | NFR-02 Hiệu năng | SSR + cache CDN theo phiên bản hồ sơ, làm mới khi xuất bản; ảnh tối ưu; JS tối thiểu ở trang hồ sơ; font tiếng Việt tự host, `font-display: swap`; ô dán: tìm kiếm trên chỉ mục trigram + vector, timeout 4 s | Web Vitals thực tế (RUM, ghi vào bảng sự kiện) p75 LCP; p95 thời gian ô dán | LCP p75 > 2,5 s trong 3 ngày; p95 ô dán > 4 s |
-| NFR-03 Sẵn sàng | Web và Studio không trạng thái; Postgres managed có sao lưu PITR; worker lỗi không ảnh hưởng trang đã xuất bản (đọc từ cache/DB) | Uptime check 1 phút cho `/` và `/api/version` | < 99,5% trong tháng |
+| NFR-03 Sẵn sàng | Trang đã xuất bản là trang tĩnh trên CDN nên đọc vẫn chạy khi máy owner tắt (H-14); ô dán và Studio phụ thuộc máy owner, báo "đang bảo trì" khi tunnel mất; sao lưu mã hóa hằng đêm (Y-06) | Uptime check 1 phút cho `/` (CDN) và `/api/version` (qua tunnel), tách riêng | Đọc < 99,5% trong tháng; tunnel mất > 1 giờ/tuần |
 | NFR-04 Quyền riêng tư | Không đọc lịch sử duyệt; sự kiện không chứa văn bản người dùng (chỉ mã băm cụm); IP không lưu trong bảng sự kiện; ảnh chụp lưu object storage với vòng đời tự xóa 24 giờ | Job kiểm tra hằng ngày: không còn ảnh > 24 giờ | Có ảnh > 24 giờ |
 | NFR-05 Tuân thủ nguồn | Adapter nguồn chỉ có 3 loại `accessMethod` (`official_api`, `user_submitted`, `editor_added`); không có adapter cào HTML mạng xã hội | Test kiểu dữ liệu `Source.accessMethod`; review khi thêm adapter | Adapter mới không thuộc danh sách |
 | NFR-06 Chính xác | Publish gate; hàng chờ báo sai có SLA; nhật ký sửa sai công khai | Thời gian từ báo sai đến xử lý; số hồ sơ gỡ | Báo sai mở > 24 giờ |

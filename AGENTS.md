@@ -7,7 +7,7 @@ Symbols are cited, not line numbers. Counts (tests, checks, docs) are left out o
 - Mobile-first Vietnamese web product: "Bắt kịp chuyện đang hot ngoài feed của bạn." The unit is a **story** with an editor-approved, sourced **catch-up dossier**; not a chatbot, not a news feed.
 - Source of truth for behaviour: `docs/01-rd/RD-REQ/RD-TBT001-customer-requirements.md` (WHAT) and `docs/01-sd/` (HOW, index `docs/01-sd/SD-INDEX.md`). Input that fed them: `docs/00-intake/`.
 - pnpm monorepo, TypeScript ESM run by Node's type stripping (Node `>=22.18`, no build step yet). Folders follow SD-TBH001 §6: `apps/*` (web, studio, worker, extension P2) and `packages/*`. A package folder exists only once it has code and tests.
-- Live today: `packages/domain` (`Story`, `CatchUpDossier`, `Claim`, `Source`, `priority`, `heat`, `checkPublishGate`) and `packages/signals` (`normalize`, `detectContextRequest`, `contextNeed`).
+- Live today: `packages/domain` (`Story`, `CatchUpDossier`, `Claim`, `Source`, `priority`, `heat`, `checkPublishGate`) `packages/signals` (`normalize`, `detectContextRequest`, `extractAskedTerms`, `contextNeed`) and `packages/lexicon` (`Term`, `trendState`, `isPublic`, `findTerms`, `discoverCandidates`, `validateLexicon`) with reviewed data in `data/lexicon/`.
 - Tests: `node --test` for `packages/*/test/**/*.test.ts`, `scripts/ci/*.test.mjs`, `tests/harness/harness.test.mjs`.
 
 ## 1. How to work
@@ -59,6 +59,8 @@ Symbols are cited, not line numbers. Counts (tests, checks, docs) are left out o
 | Sources come only from official APIs, user submissions or editors (no scraping) | `Source.accessMethod` type in `packages/domain/src/dossier.ts` + `typecheck` |
 | RD/SD follow NEXA ids, gates and traceability | `scripts/ci/check-docs.test.mjs` + `docs` check |
 | Context-request phrases match with and without diacritics ("vu gi vay"); "tối cổ" never matches plain "tôi có" | `packages/signals/test/context-request.test.ts` |
+| A lexicon term is public only when an editor approved it; heat never opens that gate; agents only propose | `packages/lexicon/test/trend.test.ts` ("heat never makes a term public…"), `data.test.ts` (proposals pending only) |
+| Independence is counted per asker, never per message; "hỏi tôi có" never matches "Hội tối cổ" | `packages/lexicon/test/discover.test.ts`, `match.test.ts` |
 | Reading needs no login (NFR-01) | **NOT LOCKED** (write with `apps/web`) |
 | Screenshots are deleted within 24 hours (NFR-04) | **NOT LOCKED** |
 | Leaderboards rank stories, never people by what they do not know | **NOT LOCKED** |

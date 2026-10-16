@@ -4,7 +4,7 @@ title: Architecture and design decisions (Phương thức thiết kế)
 phase: 01-sd
 status: INTERNAL_REVIEW
 depends_on: [RD-TBT001, SD-TBX001]
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # SD-TBH001 Architecture (方式設計)
@@ -29,7 +29,8 @@ flowchart TB
   end
   subgraph packages
     domain[domain: kiểu dữ liệu, ranking, publish gate]
-    signals[signals: chuẩn hóa tiếng Việt, câu xin bối cảnh]
+    signals[signals: chuẩn hóa tiếng Việt, câu xin bối cảnh, cụm 'X là gì']
+    lexicon[lexicon: từ lóng, trend state, khớp, đề xuất từ mới]
     ingest[ingest: adapter nguồn]
     clustering[clustering: MinHash, gán cụm theo vector]
     ai[dossier-ai: nháp có trích dẫn, OCR]
@@ -37,7 +38,9 @@ flowchart TB
     ui[ui: thẻ câu chuyện, ảnh chia sẻ]
     analytics[analytics: schema sự kiện]
   end
-  pg[(Postgres 16 + pgvector\n+ hàng đợi job)]
+  pg[(Postgres 16 + pgvector\n+ hàng đợi job\ntrên máy owner)]
+  cdn[CDN / static\nhồ sơ đã xuất bản]
+  web --> cdn
   web --> pg
   studio --> pg
   worker --> pg
@@ -68,18 +71,22 @@ flowchart TB
 | H-11 | Sự kiện đo lường ghi vào Postgres (bảng sự kiện riêng), dashboard SQL | Không chuyển dữ liệu người dùng cho bên thứ ba ở P1; đủ cho pilot | > 5 triệu sự kiện/tháng |
 | H-12 | Extension P2 dùng WXT, bắt đầu từ mẫu `sample.sidepanel-dictionary`, fallback popup cho Cốc Cốc | Framework MV3 đang duy trì, MIT | Cốc Cốc chặn API cần thiết |
 | H-13 | Mọi app có `/api/version` trả commit sha và thời điểm build | Biết bản nào đang chạy (thang release, harness L9) | Không |
+| H-14 | Dữ liệu (Postgres, object storage, worker) chạy trên **máy local của owner** (owner chốt 2026-10-16). Hồ sơ đã xuất bản được render thành trang tĩnh đẩy lên CDN; ô dán và Studio đi qua tunnel tới máy owner | Owner giữ dữ liệu; việc đọc không phụ thuộc máy owner đang bật (NFR-03) | Lưu lượng ô dán vượt khả năng máy owner, hoặc máy owner offline > 1 giờ/tuần |
+| H-15 | Lexicon P1 là dữ liệu JSON có review trong repo (`data/lexicon/`), kiểm bằng `validateLexicon`; nhập vào Postgres khi có `packages/db` | Mỗi thay đổi nghĩa từ có diff, người duyệt, lịch sử (PR); không cần UI Studio để bắt đầu | Hơn 2.000 mục hoặc hơn 50 thay đổi/ngày |
+| H-16 | Skill `toibingu-trend-scout` (agent chạy định kỳ) chỉ **đề xuất** vào `data/lexicon/proposals/`; duyệt là việc của biên tập viên. Mức nóng (`trendState`) và duyệt (`isPublic`) là hai hàm tách biệt | Giữ nguyên tắc H-05 cho từ lóng: nóng không mở được cổng công khai | Không |
 
 ## 6. Repository layout
 
 ```
 apps/web  apps/studio  apps/worker  apps/extension (P2)
-packages/domain  packages/signals  packages/ingest  packages/clustering
+packages/domain  packages/signals  packages/lexicon  packages/ingest  packages/clustering
 packages/dossier-ai  packages/db  packages/ui  packages/analytics
+data/lexicon (terms.json, proposals/)
 docs/00-intake  docs/01-rd  docs/01-sd  docs/02-bd (sau)  docs/03-dd (sau)
 scripts/harness  scripts/ci  tests/harness  .nexa
 ```
 
-Thứ tự hiện thực: `domain` và `signals` (đã có test) trước, rồi `db`, `ingest`, `clustering`, `worker`, `web`, `studio`, `dossier-ai`, `ui`, `analytics`. Package chưa có code thì chưa tạo thư mục.
+Thứ tự hiện thực: `domain`, `signals`, `lexicon` (đã có test) trước, rồi `db`, `ingest`, `clustering`, `worker`, `web`, `studio`, `dossier-ai`, `ui`, `analytics`. Package chưa có code thì chưa tạo thư mục.
 
 ## 7. Non-functional, integration, data
 

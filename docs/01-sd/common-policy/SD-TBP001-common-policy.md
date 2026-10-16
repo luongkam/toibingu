@@ -4,7 +4,7 @@ title: Common policy (Chính sách chung)
 phase: 01-sd
 status: INTERNAL_REVIEW
 depends_on: [RD-TBT001, SD-TBH001]
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # SD-TBP001 Common policy
@@ -58,6 +58,12 @@ Web, Studio, worker, extension (P2) và mọi nội dung xuất bản dưới t�
 - Mã tài liệu theo NEXA: `RD-TB…`, `SD-TB{X|H|N|I|Y|P}NNN` (`.nexa/domain-registry.json`).
 - Slug hồ sơ: tiếng Việt không dấu, ổn định.
 - Trạng thái bằng chứng trong PR, báo cáo: theo `docs/status-contract.md` (PASS, FAIL, NOT_TESTED, BLOCKED_INPUT, INVALID, PENDING_AUTH, WAIVED).
+
+### P-08 Lexicon (từ lóng, trend)
+- Nghĩa viết trung lập, ≤ 200 ký tự, có ít nhất 1 nguồn công khai khi duyệt (trừ từ khóa thương hiệu).
+- Từ xúc phạm hoặc nhắm vào cá nhân: gắn `sensitive`, chỉ giải thích, không lên trang chủ, không nêu tên người bị nhắm.
+- Từ khóa thương hiệu ("Tôi bị ngu", "Hội tối cổ", "Thánh thông não") luôn dùng theo giọng P-04: tự trào, không gán cho người khác.
+- Agent (skill `toibingu-trend-scout`) chỉ đề xuất; không đổi `review`, không điền `approvedBy`.
 
 ## 4. Integration, data and NFR notes
 

@@ -4,7 +4,7 @@ title: Data architecture (Kiến trúc dữ liệu)
 phase: 01-sd
 status: INTERNAL_REVIEW
 depends_on: [RD-TBT001, SD-TBH001]
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # SD-TBY001 Data architecture
@@ -35,6 +35,9 @@ erDiagram
   STORY ||--o{ FEEDBACK : "phản hồi"
   EDITOR ||--o{ DOSSIER_REVISION : "duyệt"
   EDITOR ||--o{ AUDIT_LOG : ""
+  TERM }o--o{ STORY : "liên quan"
+  TERM ||--o{ TERM_SOURCE : "nguồn"
+  CONTEXT_REQUEST }o--o{ TERM : "hỏi 'X là gì'"
 ```
 
 | Thực thể | Nội dung chính | Vòng đời / ghi chú | RD |
@@ -54,6 +57,8 @@ erDiagram
 | Event | Sự kiện đo lường ẩn danh (danh sách ở REQ-013), mã giới thiệu | Chi tiết 13 tháng, sau đó gộp | REQ-013 |
 | Editor, AuditLog | Tài khoản Studio, vai trò; mọi hành động soạn / duyệt / xuất bản / gộp | Audit giữ tối thiểu 24 tháng | REQ-010, NFR-07 |
 | Screenshot (object storage) | Ảnh người dùng tải lên ô dán | **Tự xóa sau 24 giờ** | REQ-003, NFR-04 |
+| Term | Dạng chuẩn có dấu, biến thể, `accentedOnly`, loại (slang, catchphrase, nickname, hashtag, brand), nghĩa ≤ 200 ký tự, cộng đồng, nền tảng, `evergreen`, `sensitive`, trạng thái duyệt, người duyệt, story liên quan | P1 lưu ở `data/lexicon/terms.json` (H-15); trạng thái nóng tính lại mỗi chu kỳ, không lưu tay; kiểu `Term` trong `packages/lexicon` | REQ-017 |
+| TermProposal | Đề xuất mục mới hoặc sửa từ skill trend-scout hoặc từ `discoverCandidates` (số người hỏi độc lập, cộng đồng, nguồn) | `data/lexicon/proposals/<ngày>.json`; xóa sau khi duyệt hoặc từ chối (lịch sử còn trong git) | REQ-017 |
 
 ## 4. Design decisions
 
@@ -64,6 +69,7 @@ erDiagram
 | Y-03 | Không lưu văn bản người dùng trong bảng sự kiện; định danh thiết bị chỉ lưu dạng mã băm có muối xoay vòng theo quý | Quyền riêng tư (NFR-04) nhưng vẫn đếm được "người độc lập" |
 | Y-04 | Vector lưu cạnh dữ liệu (pgvector), không dùng vector DB riêng | Một kho, ít vận hành (H-04) |
 | Y-05 | Slug tiếng Việt không dấu, ổn định; đổi tiêu đề không đổi slug | Link chia sẻ và SEO không gãy |
+| Y-06 | Toàn bộ dữ liệu nằm trên máy owner (H-14); sao lưu mã hóa hằng đêm ra một đích owner chọn | Máy local là điểm hỏng đơn |
 
 ## 5. Integration and NFR notes
 

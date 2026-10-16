@@ -9,4 +9,4 @@
   They also **feed back**: after a PR (the release ladder) and at Stop (once if you shipped without naming the ladder rung, once per tree state if code changed without a verify run).
   Fix the cause; never route around a hook.
 - End every hand-off with the release ladder (AGENTS.md §4). Never say "deployed" or "live"; only the owner confirms that.
-- Skills: `toibingu-ship` (verify, PR, merge, "đã lên chưa"), `toibingu-design-change` (RD/SD before code).
+- Skills: `toibingu-ship` (verify, PR, merge, "đã lên chưa"), `toibingu-design-change` (RD/SD before code), `toibingu-trend-scout` (propose slang/trend lexicon entries, never approve).

@@ -23,7 +23,7 @@ export default {
     // NEXA G1/G1_5 + id/trace rules for docs/01-rd and docs/01-sd (scripts/ci/check-docs.mjs).
     { id: 'docs', when: touched(/^(docs\/0[0-9]-|\.nexa\/|scripts\/ci\/check-docs)/), run: [process.execPath, 'scripts/ci/check-docs.mjs'] },
     { id: 'typecheck', when: touched(/\.(m?tsx?|json)$/), run: ['pnpm', 'typecheck'] },
-    { id: 'tests', when: touched(/^(packages|apps|scripts\/ci)\/|^package\.json$|^tsconfig/), run: ['pnpm', 'test'] },
+    { id: 'tests', when: touched(/^(packages|apps|data|scripts\/ci)\/|^package\.json$|^tsconfig/), run: ['pnpm', 'test'] },
     { id: 'harness', when: touched(/^(scripts\/harness|tests\/harness)\//), run: [process.execPath, '--test', 'tests/harness/harness.test.mjs'] },
   ],
 
@@ -44,7 +44,7 @@ export default {
     },
   ],
 
-  codePaths: /^(apps|packages|scripts|tests)\//,
+  codePaths: /^(apps|packages|scripts|tests|data)\//,
 
   deploy: {
     lockfiles: ['pnpm-lock.yaml'],

@@ -5,7 +5,7 @@ phase: 01-rd
 status: INTERNAL_REVIEW
 owner: Product owner (Logan)
 source: docs/00-intake/product-brief.md, docs/00-intake/research/engagement-scenarios.md, docs/00-intake/research/github-landscape.md
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # RD-TBT001 Toibingu - Customer Requirements
@@ -136,12 +136,25 @@ Ngôn ngữ: must = bắt buộc, should = nên, can = tùy chọn. Phase: **P1*
 - **Traceability:** Upstream: brief §6, K6, research (WXT, sidepanel-dictionary).
 
 ### REQ-016 "Thánh thông não" và đóng góp cộng đồng (P2)
-- **Behavior:** Người dùng gửi lời giải, nguồn bổ sung, sửa sai; mọi đóng góp qua hàng chờ biên tập. Điểm dựa trên đóng góp **được duyệt** và **được đánh giá hữu ích bởi người từ nhiều cộng đồng** (mô hình bridging kiểu Community Notes), không dựa trên số lượng. Điều kiện mở: có ý kiến pháp lý về Nghị định 147/2024/NĐ-CP (Q-01).
+- **Behavior:** Người dùng gửi lời giải, nguồn bổ sung, sửa sai; mọi đóng góp qua hàng chờ biên tập. Điểm dựa trên đóng góp **được duyệt** và **được đánh giá hữu ích bởi người từ nhiều cộng đồng** (mô hình bridging kiểu Community Notes), không dựa trên số lượng. Owner chốt 2026-10-16: không cần ý kiến pháp lý trước khi mở (Q-01 đã đóng). "Thánh thông não" và "Hội tối cổ" là từ khóa thương hiệu (REQ-017).
 - **Traceability:** Upstream: brief §7, research Community Notes.
+
+### REQ-017 Engine từ lóng và trend sống (P1)
+- **Goal:** Luôn biết cộng đồng đang nói gì và chữ đó nghĩa là gì, trên nhiều nền tảng (Threads, TikTok, Facebook, YouTube, Google Trends), để phần "Giải mã cách mọi người nói" (REQ-004), ô dán (REQ-003) và trang "X là gì" (REQ-012) luôn mới.
+- **Behavior:**
+  - Hệ thống must giữ một **lexicon** gồm từ lóng, câu cửa miệng, biệt danh, hashtag và **từ khóa thương hiệu** ("Tôi bị ngu", "Hội tối cổ", "Thánh thông não"). Mỗi mục có dạng viết chuẩn có dấu, các biến thể (không dấu, teen code), nghĩa trung lập ≤ 200 ký tự, cộng đồng, nền tảng, nguồn, câu chuyện liên quan.
+  - Phát hiện từ mới must dựa trên: cụm người dùng hỏi "X là gì" (ô dán, câu xin bối cảnh từ nguồn được phép), mức tăng dùng so với baseline của chính từ đó, số cộng đồng xuất hiện. Đếm theo **người hỏi độc lập**, không theo số tin nhắn.
+  - Trạng thái nóng (`emerging`, `hot`, `fading`, `dormant`) must được tính tự động; trạng thái duyệt (`pending`, `approved`, `rejected`) must do biên tập viên quyết. Từ chưa duyệt must not hiện ở bất kỳ bề mặt công khai nào, dù đang nóng.
+  - Cụm mà bỏ dấu sẽ trùng chữ thường ("tối cổ" và "tôi có", "Hội tối cổ" và "hỏi tôi có") must chỉ khớp theo dạng có dấu.
+  - Một quy trình vận hành (skill `toibingu-trend-scout`) must chạy định kỳ: gom tín hiệu từ nguồn được phép, đề xuất mục mới hoặc cập nhật kèm nguồn, ghi vào hàng chờ đề xuất; không tự duyệt.
+  - Từ nhạy cảm (xúc phạm, nhắm vào cá nhân) must được gắn cờ `sensitive`, chỉ giải thích trung lập, không lên trang chủ, không nêu tên người bị nhắm.
+- **Acceptance Criteria:** AC-017.1 Từ chưa duyệt không bao giờ công khai (`trend.test.ts`). AC-017.2 Một người hỏi 20 lần chỉ tính 1 (`discover.test.ts`). AC-017.3 "hỏi tôi có" không khớp "Hội tối cổ" (`match.test.ts`). AC-017.4 Dữ liệu lexicon trong repo hợp lệ (`validateLexicon`, test dữ liệu). AC-017.5 Từ đã có trong lexicon không bị đề xuất lại.
+- **UAT:** Given 5 người dùng khác nhau dán "'ét o ét' là gì", When biên tập viên mở hàng chờ, Then thấy đề xuất "ét o ét" với số người hỏi = 5 và cộng đồng; When duyệt kèm nguồn, Then ô dán khớp được cụm đó.
+- **Traceability:** Upstream: owner 2026-10-16 ("cần 1 skill / engine liên tục update các từ lóng, trend hot trên các nền tảng"), brief §5, research. Downstream: SD-TBH001 (H-15, H-16), SD-TBY001 (Term), SD-TBI001 (IF-08 đến IF-11), `packages/lexicon` tests, `packages/signals/test/asked-terms.test.ts`.
 
 ## 3. Scope (Đối tượng phạm vi)
 
-**P1 (MVP pilot):** REQ-001 đến REQ-013. Web tối ưu điện thoại (tiếng Việt), Studio nội bộ, worker xử lý tín hiệu, 3 cộng đồng pilot: meme / văn hóa mạng, game, công nghệ. Cộng đồng giải trí can thêm khi có biên tập viên.
+**P1 (MVP pilot):** REQ-001 đến REQ-013 và REQ-017. Web tối ưu điện thoại (tiếng Việt), Studio nội bộ, worker xử lý tín hiệu, 3 cộng đồng pilot: meme / văn hóa mạng, game, công nghệ. Cộng đồng giải trí can thêm khi có biên tập viên.
 
 **P2:** REQ-014, REQ-015, REQ-016.
 
@@ -162,7 +175,7 @@ Ngôn ngữ: must = bắt buộc, should = nên, can = tùy chọn. Phase: **P1*
 | NFR-01 | Truy cập | Đọc mọi nội dung công khai không cần đăng nhập. |
 | NFR-02 | Hiệu năng | Trang chủ và hồ sơ: LCP p75 ≤ 2,5 s trên điện thoại tầm trung mạng 4G; ô dán trả kết quả p95 ≤ 4 s (không tính OCR ảnh). |
 | NFR-03 | Sẵn sàng | Web công khai ≥ 99,5%/tháng trong pilot; Studio, worker được phép bảo trì có báo trước. |
-| NFR-04 | Quyền riêng tư | Không thu thập lịch sử duyệt web; định danh thiết bị ẩn danh; không lưu ảnh chụp người dùng quá 24 giờ; tuân thủ pháp luật bảo vệ dữ liệu cá nhân Việt Nam (xác nhận với luật sư, Q-02). |
+| NFR-04 | Quyền riêng tư | Không thu thập lịch sử duyệt web; định danh thiết bị ẩn danh; không lưu ảnh chụp người dùng quá 24 giờ; dữ liệu lưu trên máy của owner (Q-02 đã chốt). |
 | NFR-05 | Tuân thủ nguồn | Chỉ dùng API chính thức, nội dung người dùng chủ động gửi, link biên tập viên thêm. Mọi Source ghi `accessMethod`. |
 | NFR-06 | Chính xác | 0 hồ sơ phải gỡ vì sai sự thật; báo sai xử lý < 24 giờ (mục tiêu pilot). |
 | NFR-07 | Khả năng truy vết | Mọi phiên bản hồ sơ truy vết được người duyệt, thời điểm, nguồn; nhật ký sửa sai công khai. |
@@ -172,7 +185,7 @@ Ngôn ngữ: must = bắt buộc, should = nên, can = tùy chọn. Phase: **P1*
 
 ## 6. Assumptions (Giả định)
 
-- A1: Meta duyệt quyền `threads_keyword_search` trong pilot; nếu không, P1 vẫn chạy bằng link người dùng gửi + biên tập viên + Google Trends RSS.
+- A1: Owner nộp xin quyền trên nhiều nền tảng (danh sách ở SD-TBI001 §3 và `docs/00-intake/research/platform-access.md`); nền tảng nào chưa được duyệt, P1 vẫn chạy bằng link người dùng gửi + biên tập viên + Google Trends RSS.
 - A2: Pilot có 1 đến 2 biên tập viên bán thời gian; công suất mục tiêu 3 đến 5 hồ sơ mới mỗi ngày.
 - A3: Quy mô pilot < 50.000 người dùng/tháng; không cần hạ tầng phân tán.
 - A4: Tên miền chính `toibingu.vn`, phụ `toibingu.cc`; tình trạng đăng ký **chưa xác minh**.
@@ -182,19 +195,19 @@ Ngôn ngữ: must = bắt buộc, should = nên, can = tùy chọn. Phase: **P1*
 
 | No | Content | Owner | Priority |
 |---|---|---|---|
-| Q-01 | Mở đóng góp công khai (REQ-016) có khiến Toibingu thuộc diện mạng xã hội theo Nghị định 147/2024 (xác thực số điện thoại) không? | Owner + luật sư | High |
-| Q-02 | Nghĩa vụ theo pháp luật bảo vệ dữ liệu cá nhân và yêu cầu lưu trữ dữ liệu tại Việt Nam (nếu có) với định danh ẩn danh + ảnh chụp tạm thời? | Owner + luật sư | High |
-| Q-03 | Tên miền `toibingu.vn` / `.cc` còn đăng ký được không; ai đứng tên? | Owner | High |
-| Q-04 | Đưa quiz "Hội tối cổ" vào P1 (research đề xuất) hay giữ P2 (brief)? Mặc định: P2. | Owner | Medium |
+| Q-01 | ĐÃ CHỐT 2026-10-16: không hỏi luật sư trước khi mở REQ-016 (Nghị định 147/2024). | Owner | Closed |
+| Q-02 | ĐÃ CHỐT 2026-10-16: dữ liệu lưu trên máy local của owner (SD-TBH001 H-14). | Owner | Closed |
+| Q-03 | Tên miền `toibingu.vn` / `.cc` còn đăng ký được không; ai đứng tên? Owner hoãn 2026-10-16. | Owner | Low |
+| Q-04 | ĐÃ CHỐT 2026-10-16: quiz "Hội tối cổ" ở P2. | Owner | Closed |
 | Q-05 | Ngân sách LLM/embedding tháng và trần chi phí mỗi hồ sơ. | Owner | Medium |
 | Q-06 | Hồ sơ "Đang xác minh" được chia sẻ có nhãn (mặc định) hay chặn chia sẻ hoàn toàn? | Owner + biên tập | Medium |
 | Q-07 | Page meme đối tác nào thử nghiệm (K7), điều khoản ghi nguồn hai chiều? | Owner | Low |
 
 ## 8. Customer confirmation (顧客確認事項)
 
-- [ ] Owner xác nhận phạm vi P1 = REQ-001 đến REQ-013.
+- [ ] Owner xác nhận phạm vi P1 = REQ-001 đến REQ-013 và REQ-017.
 - [ ] Owner xác nhận North Star và ngưỡng chuyển P2 ở mục 9.
-- [ ] Owner trả lời Q-01, Q-02 trước khi mở REQ-016.
+- [x] Owner trả lời Q-01, Q-02 (2026-10-16).
 - [ ] Owner xác nhận nguyên tắc: độ tin cậy là cổng xuất bản, không phải trọng số xếp hạng.
 
 ## 9. Success metrics (Chỉ số pilot, giả thuyết)
@@ -232,3 +245,4 @@ Ngưỡng chuyển P2: đạt ≥ 4/7 chỉ số đầu trong 2 tuần liên ti�
 | REQ-014 | brief §7 | P2 | TBD | Chưa |
 | REQ-015 | brief §6 | P2 | SD-TBX001 | Chưa |
 | REQ-016 | brief §7 | P2 | TBD | Chưa |
+| REQ-017 | owner 2026-10-16, brief §5 | có | SD-TBH001, SD-TBY001, SD-TBI001, SD-TBP001, `packages/lexicon` tests | Chưa |
