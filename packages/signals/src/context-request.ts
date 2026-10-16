@@ -3,6 +3,7 @@
  * Matching on folded text catches unaccented chat ("vu gi vay"); phrases that become ambiguous once
  * folded ("tối cổ" vs "tôi có") match only on accented text.
  */
+import { extractAskedTerms } from "./asked-terms.ts";
 import { normalize } from "./normalize.ts";
 
 export type ContextRequestKind =
@@ -12,7 +13,9 @@ export type ContextRequestKind =
   | "missed_part"
   | "why_everyone"
   | "explain_please"
-  | "toi_bi_ngu";
+  | "toi_bi_ngu"
+  /** "X là gì (vậy)?": the most common way to ask for the missing episode. */
+  | "what_is";
 
 interface Rule {
   kind: ContextRequestKind;
@@ -42,5 +45,6 @@ export function detectContextRequest(text: string): ContextRequestMatch {
   const kinds = RULES.filter(
     (r) => (r.folded?.test(folded) ?? false) || (r.accented?.test(accented) ?? false),
   ).map((r) => r.kind);
+  if (extractAskedTerms(text).length > 0) kinds.push("what_is");
   return { isRequest: kinds.length > 0, kinds };
 }

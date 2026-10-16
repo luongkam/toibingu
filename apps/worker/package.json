@@ -1,0 +1,12 @@
+{
+  "name": "@toibingu/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@toibingu/domain": "workspace:*",
+    "@toibingu/ingest": "workspace:*",
+    "@toibingu/lexicon": "workspace:*",
+    "@toibingu/signals": "workspace:*"
+  }
+}

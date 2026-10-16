@@ -29,4 +29,4 @@
 ## How to try it
 - `pnpm test` (fakes); with credentials on the owner machine: `node apps/worker/src/run-once.ts --source google-trends` (to be added).
 
-**Owner OK on this plan:** PENDING (adapter code waits for it).
+**Owner OK on this plan:** 2026-10-16 ("ok duyệt plan. làm đi"). TikTok Discovery adapter stays BLOCKED_INPUT until an approved app and its API reference are available (no guessed endpoints).

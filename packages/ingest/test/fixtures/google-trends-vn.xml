@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:ht="https://trends.google.com/trending/rss" version="2.0">
+	<channel>
+		<title>Daily Search Trends</title>
+		<description>Recent searches</description>
+		<link>https://trends.google.com/trending/rss?geo=VN</link>
+		<atom:link href="https://trends.google.com/trending/rss?geo=VN" rel="self" type="application/rss+xml"/>
+		<item>
+			<title>doanh thu</title>
+			<ht:approx_traffic>500+</ht:approx_traffic>
+			<description/>
+			<link>https://trends.google.com/trending/rss?geo=VN</link>
+			<pubDate>Thu, 15 Oct 2026 19:10:00 -0700</pubDate>
+			<ht:picture_source>Tin tức 24h</ht:picture_source>
+			<ht:news_item>
+				<ht:news_item_title>Hộ kinh doanh doanh thu dưới 1 tỷ đồng: Lưu ý quan trọng về thông báo doanh thu để tránh bị phạt</ht:news_item_title>
+				<ht:news_item_snippet/>
+				<ht:news_item_url>https://www.24h.com.vn/kinh-doanh/ho-kinh-doanh-doanh-thu-duoi-1-ty-dong-luu-y-quan-trong-ve-thong-bao-doanh-thu-de-tranh-bi-phat-c161a1803041.html</ht:news_item_url>
+				<ht:news_item_source>Tin tức 24h</ht:news_item_source>
+			</ht:news_item>
+			<ht:news_item>
+				<ht:news_item_title>Hộ kinh doanh ‘đứng tên’ vay vốn có thể bị tạm hoãn xuất cảnh</ht:news_item_title>
+				<ht:news_item_snippet/>
+				<ht:news_item_url>https://thoibao.de/blog/2026/10/14/ho-kinh-doanh-dung-ten-vay-von-co-the-bi-tam-hoan-xuat-canh</ht:news_item_url>
+				<ht:news_item_source>Thời báo</ht:news_item_source>
+			</ht:news_item>
+			<ht:news_item>
+				<ht:news_item_title>Quy định về thông báo doanh thu hộ kinh doanh: Những mốc thời gian và nghĩa vụ pháp lý cần nhớ</ht:news_item_title>
+				<ht:news_item_snippet/>
+				<ht:news_item_url>https://thuehaiquan.tapchikinhtetaichinh.vn/quy-dinh-ve-thong-bao-doanh-thu-ho-kinh-doanh-nhung-moc-thoi-gian-va-nghia-vu-phap-ly-can-nho-169485.html</ht:news_item_url>
+				<ht:news_item_source>Tạp chí Kinh tế - Tài chính Online</ht:news_item_source>
+			</ht:news_item>
+		</item><item>
+			<title>giá vàng hôm nay</title>
+			<ht:approx_traffic>500+</ht:approx_traffic>
+			<description/>
+			<link>https://trends.google.com/trending/rss?geo=VN</link>
+			<pubDate>Thu, 15 Oct 2026 19:00:00 -0700</pubDate>
+			<ht:picture_source>Báo Dân trí</ht:picture_source>
+			<ht:news_item>
+				<ht:news_item_title>Giá vàng hôm nay biến động mạnh</ht:news_item_title>
+				<ht:news_item_snippet/>
+				<ht:news_item_url>https://example.com/gia-vang</ht:news_item_url>
+				<ht:news_item_source>Example News</ht:news_item_source>
+			</ht:news_item>
+			<ht:news_item>
+				<ht:news_item_title>Giá vàng hôm nay biến động mạnh</ht:news_item_title>
+				<ht:news_item_snippet/>
+				<ht:news_item_url>https://example.com/gia-vang</ht:news_item_url>
+				<ht:news_item_source>Example News</ht:news_item_source>
+			</ht:news_item>
+			<ht:news_item>
+				<ht:news_item_title>Giá vàng hôm nay biến động mạnh</ht:news_item_title>
+				<ht:news_item_snippet/>
+				<ht:news_item_url>https://example.com/gia-vang</ht:news_item_url>
+				<ht:news_item_source>Example News</ht:news_item_source>
+			</ht:news_item>
+		</item>
+	</channel>
+</rss>

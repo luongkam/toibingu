@@ -97,7 +97,7 @@ Ngôn ngữ: must = bắt buộc, should = nên, can = tùy chọn. Phase: **P1*
 - **Behavior:**
   - Nguồn P1 must chỉ gồm: Threads keyword/topic search API chính thức (khi được duyệt quyền `threads_keyword_search`), Google Trends RSS realtime, link người dùng gửi (REQ-003), link biên tập viên thêm. Thu thập tự động trái điều khoản nền tảng must not được dùng.
   - Tín hiệu lớp 1 (đang nổi): tốc độ tăng thảo luận so với baseline **của chính nguồn đó**, số cộng đồng khác nhau có xuất hiện, truy vấn tìm kiếm tăng.
-  - Tín hiệu lớp 2 (thiếu bối cảnh): số người độc lập gửi cùng chuyện, câu xin bối cảnh ("vụ gì vậy", "ai tóm tắt giúp", "xin nguồn", "tôi bỏ lỡ đoạn nào", "sao mọi người cười", "ai giải thích hộ", "tôi bị ngu"), tỷ lệ "Kể tôi nghe" và "Vẫn chưa hiểu".
+  - Tín hiệu lớp 2 (thiếu bối cảnh): số người độc lập gửi cùng chuyện, câu xin bối cảnh ("X là gì", "vụ gì vậy", "ai tóm tắt giúp", "xin nguồn", "tôi bỏ lỡ đoạn nào", "sao mọi người cười", "ai giải thích hộ", "tôi bị ngu"), tỷ lệ "Kể tôi nghe" và "Vẫn chưa hiểu".
   - Bài trùng / repost must gộp trước khi đếm; nhiều bài cùng chuyện gộp về 1 story candidate.
   - Ưu tiên = đang nóng + nhu cầu bối cảnh + liên quan. Độ tin cậy must not là trọng số ưu tiên; nó là điều kiện xuất bản (REQ-010).
 - **Acceptance Criteria:** AC-009.1 20 repost trong một cộng đồng không làm tăng điểm nóng so với 1 bài (test `ranking.test.ts`). AC-009.2 Chuyện lan ở nhiều cộng đồng xếp trên chuyện cùng độ nóng ở một cộng đồng. AC-009.3 Chuyện nóng nhưng không ai cần giải thích xếp dưới chuyện ấm mà nhiều người hỏi. AC-009.4 Bộ nhận diện câu xin bối cảnh khớp cả viết có dấu và không dấu.

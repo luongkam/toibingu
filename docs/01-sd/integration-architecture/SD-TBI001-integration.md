@@ -47,6 +47,7 @@ Mọi lời gọi ra ngoài ranh giới hệ thống (SD-TBX001). Mọi tích h�
 | I-07 | Không dùng TikTok Research API, Meta Content Library (chỉ cho nghiên cứu phi lợi nhuận), không dùng wrapper/actor bên thứ ba, không cào JSON của Creative Center | Điều khoản TikTok §5, Meta; bất biến "không cào" |
 | I-08 | Quota Threads tính theo từng người dùng: mỗi biên tập viên thật đăng nhập bằng tài khoản của mình; cấm tài khoản phụ để nhân quota | Điều khoản Meta |
 | I-09 | Danh sách quyền cần xin và thứ tự nộp: `docs/00-intake/research/platform-access.md` | Owner nộp; adapter chỉ bật khi có credential |
+| I-10 | Adapter đã có trong `packages/ingest`: IF-01 (Threads), IF-02 (Google Trends RSS), IF-09 (Instagram hashtag); IF-10 (TikTok Discovery) chờ app được duyệt và tài liệu API, không đoán endpoint. Adapter không bao giờ throw; giữ quota phía mình (2.200 truy vấn/24 giờ/token Threads; 30 hashtag/7 ngày) | Pipeline không dừng khi một nguồn hỏng; không chạm giới hạn nền tảng |
 
 ## 5. Data and NFR notes
 

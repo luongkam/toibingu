@@ -9,7 +9,7 @@
   "scripts": {
     "verify": "node scripts/harness/verify.mjs",
     "typecheck": "tsc -p tsconfig.json",
-    "test": "node --test \"packages/*/test/**/*.test.ts\" \"scripts/ci/*.test.mjs\"",
+    "test": "node --test \"packages/*/test/**/*.test.ts\" \"apps/*/test/**/*.test.ts\" \"scripts/ci/*.test.mjs\"",
     "check:docs": "node scripts/ci/check-docs.mjs"
   },
   "devDependencies": {

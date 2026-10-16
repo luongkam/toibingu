@@ -37,3 +37,10 @@ test("ordinary chatter is not a request", () => {
 test("normalize folds đ, strips punctuation and expands teen code", () => {
   assert.deepEqual(normalize("Đc  ko???"), { accented: "đc ko", folded: "duoc khong" });
 });
+
+test("'X là gì' is a context request (regression: was missed before what_is)", () => {
+  assert.deepEqual(kinds("'ét o ét' là gì vậy"), ["what_is"]);
+  assert.deepEqual(kinds("skibidi la gi"), ["what_is"]);
+  assert.ok(kinds("Tôi bị ngu, rizz là gì").includes("toi_bi_ngu"));
+  assert.ok(kinds("Tôi bị ngu, rizz là gì").includes("what_is"));
+});

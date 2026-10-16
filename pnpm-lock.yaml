@@ -15,7 +15,28 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2
 
+  apps/worker:
+    dependencies:
+      '@toibingu/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+      '@toibingu/ingest':
+        specifier: workspace:*
+        version: link:../../packages/ingest
+      '@toibingu/lexicon':
+        specifier: workspace:*
+        version: link:../../packages/lexicon
+      '@toibingu/signals':
+        specifier: workspace:*
+        version: link:../../packages/signals
+
   packages/domain: {}
+
+  packages/ingest:
+    dependencies:
+      '@toibingu/domain':
+        specifier: workspace:*
+        version: link:../domain
 
   packages/lexicon:
     dependencies:
