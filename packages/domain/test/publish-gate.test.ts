@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import type { CatchUpDossier } from "../src/dossier.ts";
 import { checkPublishGate } from "../src/publish-gate.ts";
+import { needsVerifyingBanner } from "../src/dossier.ts";
 
 const base = (): CatchUpDossier => ({
   storyId: "st_1",
@@ -64,4 +65,13 @@ test("references to unknown sources are caught", () => {
 
 test("empty core sections block publishing", () => {
   assert.deepEqual(codes({ ...base(), missedPart: "  " }), ["missing_section"]);
+});
+
+test("'Đang xác minh' banner only when the quick take rests on an unconfirmed claim", () => {
+  const d = base();
+  assert.equal(needsVerifyingBanner(d), false);
+  d.claims.push({ id: "c9", text: "Có tin đồn…", status: "circulating", sourceIds: ["src_1"] });
+  assert.equal(needsVerifyingBanner(d), false, "a rumour elsewhere in the dossier does not taint the quick take");
+  d.quickTakeClaimIds = ["c1", "c9"];
+  assert.equal(needsVerifyingBanner(d), true);
 });

@@ -78,6 +78,8 @@ export interface CatchUpDossier {
   /** Diễn biến. */
   timeline: TimelineEvent[];
   claims: Claim[];
+  /** Claims the quick take rests on; if any is circulating or disputed the page shows "Đang xác minh" (REQ-005). */
+  quickTakeClaimIds?: string[];
   sources: Source[];
   /** Toibingu's own explanation lives in the fields above; community voices stay separate. */
   communityExplanations: CommunityExplanation[];
@@ -85,4 +87,10 @@ export interface CatchUpDossier {
   updatedAt: string;
   /** Editor who approved this revision; null while drafting. */
   approvedBy: string | null;
+}
+
+/** "Đang xác minh" banner: the quick take rests on a claim that is not confirmed (RD-TBT001 REQ-005). */
+export function needsVerifyingBanner(d: Pick<CatchUpDossier, "claims" | "quickTakeClaimIds">): boolean {
+  const ids = new Set(d.quickTakeClaimIds ?? []);
+  return d.claims.some((c) => ids.has(c.id) && (c.status === "circulating" || c.status === "disputed"));
 }

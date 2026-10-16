@@ -22,7 +22,9 @@ packages/domain/     kiểu lõi, xếp hạng, cổng xuất bản (có test)
 packages/signals/    nhận diện câu xin bối cảnh, cụm "X là gì" (có test)
 packages/lexicon/    engine từ lóng / trend: trạng thái nóng, duyệt, khớp, đề xuất (có test)
 data/lexicon/        lexicon đã review + đề xuất của skill trend-scout
-apps/                web, studio, worker (P1), extension (P2): tạo khi có code (SD-TBH001 §6)
+apps/web/            trang tĩnh: trang chủ + hồ sơ + /api/version.json (SD-TBH001 H-18)
+apps/worker/         chu kỳ gom trend (run-once trên máy owner)
+data/dossiers/       hồ sơ bắt kịp (JSON, duyệt qua PR)
 scripts/harness/     NEXA harness: verify + hooks
 scripts/ci/          check-docs (NEXA G1/G1_5, id, trace)
 tests/harness/       self-test của harness
@@ -33,4 +35,6 @@ tests/harness/       self-test của harness
 pnpm install
 pnpm verify            # chỉ các check diff cần
 pnpm verify -- --full  # mọi check, bắt buộc trước PR/merge
+pnpm build:web /tmp/site --preview   # xem cả bản nháp
+pnpm build:web /tmp/site             # bản công khai (chỉ hồ sơ đã duyệt)
 ```

@@ -10,7 +10,8 @@
     "verify": "node scripts/harness/verify.mjs",
     "typecheck": "tsc -p tsconfig.json",
     "test": "node --test \"packages/*/test/**/*.test.ts\" \"apps/*/test/**/*.test.ts\" \"scripts/ci/*.test.mjs\"",
-    "check:docs": "node scripts/ci/check-docs.mjs"
+    "check:docs": "node scripts/ci/check-docs.mjs",
+    "build:web": "node apps/web/src/build.ts"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",

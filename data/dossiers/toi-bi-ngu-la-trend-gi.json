@@ -1,0 +1,38 @@
+{
+  "story": {
+    "id": "st_toi_bi_ngu",
+    "slug": "toi-bi-ngu-la-trend-gi",
+    "headline": "“Tôi bị ngu” là trend gì mà ai cũng tự nhận vậy?",
+    "status": "drafting",
+    "originCommunity": "meme",
+    "spreadingIn": ["meme", "entertainment"],
+    "firstSeenAt": "2026-10-15T00:00:00Z",
+    "lastActivityAt": "2026-10-16T00:00:00Z",
+    "memberPostIds": []
+  },
+  "dossier": {
+    "storyId": "st_toi_bi_ngu",
+    "quickTake": "“Tôi bị ngu” là câu tự trào, nghĩa là “tôi không hiểu chuyện này, ai giải thích giúp”, không phải tự đánh giá nghiêm túc.",
+    "missedPart": "Trên mạng có mẫu câu cà khịa “lần sau chỉ cần nói ‘tôi bị ngu’ là được” để chê một bình luận dài dòng. Người hỏi tự nhận trước, như để bỏ qua bước bị chửi và được giải thích luôn.",
+    "whyHotNow": "Câu này được dùng như lời mở đầu khi xin “thông não” dưới các bài viral, kèm các biến thể như “tôi bị ngu, đừng bắt tôi làm gì”.",
+    "whereHot": [{ "community": "meme", "platforms": ["facebook", "threads"] }],
+    "decoder": [
+      { "phrase": "thông não", "meaning": "Giải thích để ai đó vỡ lẽ, hiểu ra một chuyện.", "sourceIds": [] },
+      { "phrase": "Tôi bị ngu, đừng bắt tôi làm gì", "meaning": "Biến thể đùa: đừng kỳ vọng, đừng giao việc khó cho tôi.", "sourceIds": [] }
+    ],
+    "timeline": [],
+    "claims": [
+      { "id": "c1", "text": "“Tôi bị ngu” được dùng như câu tự trào để xin người khác giải thích.", "status": "confirmed", "sourceIds": ["src_fb_kkn", "src_threads_haminhh"] },
+      { "id": "c2", "text": "Người khởi xướng trend và bài đăng gốc.", "status": "circulating", "sourceIds": [] }
+    ],
+    "quickTakeClaimIds": ["c1"],
+    "sources": [
+      { "id": "src_fb_kkn", "url": "https://www.facebook.com/kienkhongngu.vn/posts/939923138646561/", "platform": "facebook", "title": "Bình luận dạng “Tôi bị ngu, ai thông não tôi với” (Kiến Không Ngủ)", "retrievedAt": "2026-10-15", "visibility": "public", "accessMethod": "editor_added" },
+      { "id": "src_threads_haminhh", "url": "https://www.threads.com/@haminhh.1999/post/DMSvb7pTqFN", "platform": "threads", "title": "Mẫu câu “lần sau chỉ cần viết ‘tôi bị ngu’ là được”", "retrievedAt": "2026-10-15", "visibility": "public", "accessMethod": "editor_added" }
+    ],
+    "communityExplanations": [],
+    "compiledAt": "2026-10-16T00:00:00Z",
+    "updatedAt": "2026-10-16T00:00:00Z",
+    "approvedBy": null
+  }
+}

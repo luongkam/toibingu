@@ -82,6 +82,7 @@ Ngôn ngữ: must = bắt buộc, should = nên, can = tùy chọn. Phase: **P1*
 ### REQ-007 Thẻ chia sẻ (P1)
 - **Goal:** Vòng lan truyền: thiếu bối cảnh, nhận lời giải đáng gửi, gửi nhóm, người mới mở, mang tới chuyện khác.
 - **Behavior:** Mỗi hồ sơ must có ảnh xem trước 1200×630 (Open Graph) chứa tiêu đề, **một câu Hiểu nhanh** (thông tin thật, không chỉ câu giật tò mò), ngày biên soạn và tên miền. Nút chia sẻ must có: Zalo, Messenger, sao chép link, chia sẻ hệ thống (Web Share API). Câu kèm theo chọn từ bộ câu thương hiệu ("Bạn không ngu. Bạn thiếu tập 1. Đây là tập 1.", "Tôi đã được thông não vụ này. Đến lượt bạn."). Link chia sẻ must gắn mã giới thiệu ẩn danh để đo khách mới / lần chia sẻ. Hồ sơ có băng "Đang xác minh" must hiện nhãn này trên ảnh chia sẻ.
+- **Hiện trạng (2026-10-16):** trang tĩnh có nút "Gửi cho bạn bè" (Web Share API, mở bảng chia sẻ của điện thoại gồm Zalo, Messenger) và "Sao chép link"; thẻ Open Graph có tiêu đề + câu Hiểu nhanh. Nút Zalo/Messenger riêng và ảnh OG 1200×630 chưa làm (SDK Zalo chưa xác minh).
 - **Acceptance Criteria:** AC-007.1 Ảnh hiển thị đúng dấu tiếng Việt (dấu chồng) trên bộ chuỗi kiểm thử. AC-007.2 Xem trước link trên Zalo và Messenger hiển thị ảnh và tiêu đề (kiểm thử thủ công, ghi bằng chứng).
 - **UAT:** Given hồ sơ đã xuất bản, When bấm chia sẻ Zalo, Then người nhận thấy ảnh có câu Hiểu nhanh và mở được hồ sơ không cần đăng nhập.
 - **Traceability:** Upstream: brief §8, research vòng #1. Downstream: TC TBD (apps/web og route).

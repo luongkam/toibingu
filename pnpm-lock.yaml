@@ -15,6 +15,12 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2
 
+  apps/web:
+    dependencies:
+      '@toibingu/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+
   apps/worker:
     dependencies:
       '@toibingu/domain':
