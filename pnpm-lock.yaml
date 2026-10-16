@@ -32,6 +32,15 @@ importers:
 
   packages/domain: {}
 
+  packages/fanpage:
+    dependencies:
+      '@toibingu/lexicon':
+        specifier: workspace:*
+        version: link:../lexicon
+      '@toibingu/signals':
+        specifier: workspace:*
+        version: link:../signals
+
   packages/ingest:
     dependencies:
       '@toibingu/domain':

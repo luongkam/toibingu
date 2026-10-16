@@ -152,9 +152,22 @@ Ngôn ngữ: must = bắt buộc, should = nên, can = tùy chọn. Phase: **P1*
 - **UAT:** Given 5 người dùng khác nhau dán "'ét o ét' là gì", When biên tập viên mở hàng chờ, Then thấy đề xuất "ét o ét" với số người hỏi = 5 và cộng đồng; When duyệt kèm nguồn, Then ô dán khớp được cụm đó.
 - **Traceability:** Upstream: owner 2026-10-16 ("cần 1 skill / engine liên tục update các từ lóng, trend hot trên các nền tảng"), brief §5, research. Downstream: SD-TBH001 (H-15, H-16), SD-TBY001 (Term), SD-TBI001 (IF-01, IF-02, IF-08 đến IF-12), `packages/lexicon` tests, `packages/signals/test/asked-terms.test.ts`.
 
+### REQ-018 Page "Tôi bị ngu" trả lời tự động (P1)
+- **Goal:** Gặp tại chỗ người đang thấy một bài khó hiểu trên Facebook: họ gõ "Tôi bị ngu", một lúc sau Page "Tôi bị ngu" trả lời bằng phần Hiểu nhanh và link hồ sơ.
+- **Yêu cầu gốc của owner (2026-10-16):** (a) comment "Tôi bị ngu" dưới bài bất kỳ thì Page trả lời; (b) chỉ trả lời người follow Page; (c) trường hợp dễ hơn: user tag @Tôi bị ngu thì Page trả lời.
+- **Giới hạn nền tảng (research 2026-10-16, SD-TBI001 I-11):** (a) không làm được: Page không nhận tín hiệu từ comment không tag trên bài không thuộc Page; (b) không kiểm tra được: Graph API chỉ có số follower, không có danh sách hay trường "có follow không"; (c) Page nhận được webhook khi bị tag, nhưng quyền comment lên bài không thuộc Page **chưa xác minh** (nhiều khả năng không), trên bài cá nhân và group thì không.
+- **Behavior:**
+  - T1 Bài của Page: Page đăng các vụ hot (chỉ vụ có hồ sơ đã xuất bản). Comment chứa "Tôi bị ngu" (mọi cách viết lexicon biết) must nhận trả lời trong cùng thread sau 2 đến 10 phút: câu mở đầu thương hiệu (luân phiên), Hiểu nhanh ≤ 280 ký tự, link hồ sơ có mã giới thiệu, nhãn "(Trả lời tự động)". Đây là cách lọc gần nhất với "chỉ người follow": khán giả bài của Page chủ yếu là follower.
+  - T2 Tag @Tôi bị ngu ở bài khác: mỗi lần tag must được đếm làm nhu cầu bối cảnh cho vụ khớp (REQ-009). Trả lời tại chỗ must chỉ bật khi pilot xác nhận Meta cho phép (`capability = confirmed`); lỗi quyền đầu tiên must tự chuyển `denied`. Vụ chưa có hồ sơ: trả lời mời nhắn Messenger để được báo, không đoán nội dung.
+  - T3 Messenger: người dùng gửi link hoặc chia sẻ bài cho Page; Page trả lời trong cửa sổ 24 giờ bằng hồ sơ khớp (REQ-003), hoặc "chưa có hồ sơ, bạn là người thứ N hỏi". Chỉ trả lời người đã nhắn trước.
+  - Must not: trả lời chính Page; trích hồ sơ chưa xuất bản; trả lời 2 lần cho cùng người trên cùng bài; vượt 30 trả lời/bài/giờ (T1) hoặc 60 trả lời/giờ (T2); nhắn người chưa nhắn trước; dùng tài khoản cá nhân hay tự động hóa trình duyệt.
+- **Acceptance Criteria:** AC-018.1 T1 trả lời đúng điều kiện, có trễ, có nhãn tự động (`packages/fanpage/test/policy.test.ts`). AC-018.2 Hồ sơ chưa xuất bản không bao giờ được trích (`policy.test.ts`, `mention.test.ts`). AC-018.3 T2 mặc định chỉ đếm, không trả lời (`mention.test.ts`). AC-018.4 Câu mở đầu không giống hệt nhau giữa các trả lời (`policy.test.ts`). AC-018.5 Pilot thủ công: tag @Tôi bị ngu từ một Page thử dưới bài Page khác, ghi kết quả API (PASS/FAIL) vào PR trước khi bật T2.
+- **UAT:** Given bài của Page về vụ "ét o ét" đã có hồ sơ, When người dùng comment "t bị ngu", Then trong 2 đến 10 phút Page trả lời trong thread với câu Hiểu nhanh và link, có nhãn "(Trả lời tự động)".
+- **Traceability:** Upstream: owner 2026-10-16 (3 tin nhắn trên), research Facebook 2026-10-16. Downstream: SD-TBX001, SD-TBH001 (H-17), SD-TBI001 (IF-13 đến IF-15, I-11), SD-TBP001 (P-09), `packages/fanpage` tests, plan `plans/261016-1000-fanpage-bot/plan.md`.
+
 ## 3. Scope (Đối tượng phạm vi)
 
-**P1 (MVP pilot):** REQ-001 đến REQ-013 và REQ-017. Web tối ưu điện thoại (tiếng Việt), Studio nội bộ, worker xử lý tín hiệu, 3 cộng đồng pilot: meme / văn hóa mạng, game, công nghệ. Cộng đồng giải trí can thêm khi có biên tập viên.
+**P1 (MVP pilot):** REQ-001 đến REQ-013, REQ-017 và REQ-018. Web tối ưu điện thoại (tiếng Việt), Studio nội bộ, worker xử lý tín hiệu, 3 cộng đồng pilot: meme / văn hóa mạng, game, công nghệ. Cộng đồng giải trí can thêm khi có biên tập viên.
 
 **P2:** REQ-014, REQ-015, REQ-016.
 
@@ -245,4 +258,5 @@ Ngưỡng chuyển P2: đạt ≥ 4/7 chỉ số đầu trong 2 tuần liên ti�
 | REQ-014 | brief §7 | P2 | TBD | Chưa |
 | REQ-015 | brief §6 | P2 | SD-TBX001 | Chưa |
 | REQ-016 | brief §7 | P2 | TBD | Chưa |
+| REQ-018 | owner 2026-10-16 | có | SD-TBX001, SD-TBH001, SD-TBI001, SD-TBP001, `packages/fanpage` tests | Chưa |
 | REQ-017 | owner 2026-10-16, brief §5 | có | SD-TBH001, SD-TBY001, SD-TBI001, SD-TBP001, `packages/lexicon` tests | Chưa |

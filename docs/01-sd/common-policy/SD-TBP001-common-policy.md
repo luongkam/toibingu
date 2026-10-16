@@ -65,6 +65,13 @@ Web, Studio, worker, extension (P2) và mọi nội dung xuất bản dưới t�
 - Từ khóa thương hiệu ("Tôi bị ngu", "Hội tối cổ", "Thánh thông não") luôn dùng theo giọng P-04: tự trào, không gán cho người khác.
 - Agent (skill `toibingu-trend-scout`) chỉ đề xuất; không đổi `review`, không điền `approvedBy`.
 
+### P-09 Page "Tôi bị ngu" trả lời tự động
+- Chỉ trả lời khi người dùng chủ động gọi (comment "Tôi bị ngu" dưới bài của Page, tag Page, nhắn Messenger); không bao giờ nhắn người chưa nhắn trước.
+- Mỗi trả lời: câu mở đầu luân phiên, thông tin thật trong 1 câu, link hồ sơ, nhãn "(Trả lời tự động)". Không gửi hàng loạt nội dung giống hệt nhau.
+- Chỉ trích hồ sơ đã xuất bản; vụ chưa có hồ sơ thì nói thật và mời nhắn Messenger.
+- Không công khai tên hay id người đã hỏi; giọng tự trào chỉ về Page ("Tôi bị ngu"), không gán cho người hỏi.
+- Lỗi 368 (bị đánh dấu lạm dụng) từ Meta dừng mọi trả lời và báo owner.
+
 ## 4. Integration, data and NFR notes
 
 P-03 được khóa bằng `Source.accessMethod` (SD-TBI001 I-05) và `visibility` (SD-TBY001). P-05 được đo bằng job kiểm tra xóa ảnh (SD-TBN001 NFR-04).

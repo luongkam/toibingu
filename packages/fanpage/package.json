@@ -1,0 +1,11 @@
+{
+  "name": "@toibingu/fanpage",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@toibingu/lexicon": "workspace:*",
+    "@toibingu/signals": "workspace:*"
+  }
+}

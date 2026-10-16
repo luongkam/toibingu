@@ -22,6 +22,8 @@ flowchart LR
   editor([Biên tập viên\nP-ED]) -->|HTTPS + đăng nhập| studio
   ext([Extension P2]) -.->|HTTPS| web
   scout([Agent trend-scout\nđề xuất lexicon]) -->|PR đề xuất| studio
+  fbuser([Người dùng Facebook]) -->|comment / tag / Messenger| fbpage[[Page Tôi bị ngu\nMeta Graph + Webhooks]]
+  fbpage -->|webhook qua tunnel| worker
   subgraph TB[Hệ thống Toibingu]
     web[Web công khai]
     studio[Studio biên tập]
@@ -53,6 +55,7 @@ flowchart LR
 | Page đối tác | Dẫn link tới hồ sơ | Không (ngoài hệ thống) | K7 |
 | Extension (P2) | Gửi đoạn người dùng chủ động chọn | Không; `activeTab` | REQ-015 |
 | Agent trend-scout | Đề xuất mục lexicon kèm nguồn; không duyệt | Repo (PR) | REQ-017 |
+| Người dùng Facebook | Comment "Tôi bị ngu" dưới bài của Page, tag Page, nhắn Messenger | Facebook; Page chỉ thấy id theo Page | REQ-018 |
 
 ## 4. Trust boundaries (Ranh giới tin cậy)
 

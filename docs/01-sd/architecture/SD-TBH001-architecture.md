@@ -31,6 +31,7 @@ flowchart TB
     domain[domain: kiểu dữ liệu, ranking, publish gate]
     signals[signals: chuẩn hóa tiếng Việt, câu xin bối cảnh, cụm 'X là gì']
     lexicon[lexicon: từ lóng, trend state, khớp, đề xuất từ mới]
+    fanpage[fanpage: luật trả lời Page Tôi bị ngu]
     ingest[ingest: adapter nguồn]
     clustering[clustering: MinHash, gán cụm theo vector]
     ai[dossier-ai: nháp có trích dẫn, OCR]
@@ -73,6 +74,7 @@ flowchart TB
 | H-13 | Mọi app có `/api/version` trả commit sha và thời điểm build | Biết bản nào đang chạy (thang release, harness L9) | Không |
 | H-14 | Dữ liệu (Postgres, object storage, worker) chạy trên **máy local của owner** (owner chốt 2026-10-16). Hồ sơ đã xuất bản được render thành trang tĩnh đẩy lên CDN; ô dán và Studio đi qua tunnel tới máy owner | Owner giữ dữ liệu; việc đọc không phụ thuộc máy owner đang bật (NFR-03) | Lưu lượng ô dán vượt khả năng máy owner, hoặc máy owner offline > 1 giờ/tuần |
 | H-15 | Lexicon P1 là dữ liệu JSON có review trong repo (`data/lexicon/`), kiểm bằng `validateLexicon`; nhập vào Postgres khi có `packages/db` | Mỗi thay đổi nghĩa từ có diff, người duyệt, lịch sử (PR); không cần UI Studio để bắt đầu | Hơn 2.000 mục hoặc hơn 50 thay đổi/ngày |
+| H-17 | Bot Page "Tôi bị ngu": quyết định trả lời là hàm thuần trong `packages/fanpage` (`decideReply`, `decideMention`); `apps/page-bot` (webhook receiver chạy trên máy owner qua tunnel) chỉ nhận sự kiện, gọi quyết định, hẹn giờ gửi qua Graph API | Luật trả lời (trễ, giới hạn, không trích hồ sơ chưa xuất bản) khóa bằng test, đổi nền tảng không đổi luật | Meta đổi chính sách Page/Messenger |
 | H-16 | Skill `toibingu-trend-scout` (agent chạy định kỳ) chỉ **đề xuất** vào `data/lexicon/proposals/`; duyệt là việc của biên tập viên. Mức nóng (`trendState`) và duyệt (`isPublic`) là hai hàm tách biệt | Giữ nguyên tắc H-05 cho từ lóng: nóng không mở được cổng công khai | Không |
 
 ## 6. Repository layout
