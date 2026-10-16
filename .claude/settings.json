@@ -6,7 +6,7 @@
       "Bash(pnpm test*)",
       "Bash(pnpm typecheck*)",
       "Bash(node --test *)",
-      "Bash(node scripts/ci/check-docs.mjs*)",
+      "Bash(node scripts/harness/check-docs.mjs*)",
       "Bash(git status*)",
       "Bash(git diff*)",
       "Bash(git log*)"
