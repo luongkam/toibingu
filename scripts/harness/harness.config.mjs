@@ -7,7 +7,7 @@ const touched = (re) => ({ files, full }) => full || files.some((f) => re.test(f
 export default {
   project: 'toibingu',
   base: 'origin/main',
-  // Prod branch NOT CONFIRMED: the repo has no default branch yet. `main` is the planned trunk (AGENTS.md §4).
+  // `main` is the trunk (AGENTS.md §4); no deploy environment exists yet.
   prodBranches: ['main'],
   stateName: 'nexa-verify',
   verifyCommand: 'pnpm verify',
@@ -52,7 +52,7 @@ export default {
   },
 
   sessionNotes: [
-    'Chưa có môi trường deploy và chưa có nhánh main: verify --full local là cổng duy nhất.',
+    'Chưa có môi trường deploy và chưa có CI: verify --full local là cổng duy nhất; vào main chỉ qua PR.',
     'RD/SD là bắt buộc: đổi hành vi sản phẩm = sửa docs/01-rd hoặc docs/01-sd trong cùng PR.',
   ],
 };

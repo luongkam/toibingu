@@ -35,7 +35,7 @@ Symbols are cited, not line numbers. Counts (tests, checks, docs) are left out o
 
 ## 4. Release truth
 - No CI and no branch protection yet: the local `pnpm verify -- --full` run is the only gate.
-- Prod branch: `main` (planned; **NOT CONFIRMED**, the remote has no default branch yet). **Merged is not deployed.**
+- Trunk: `main` (created 2026-10-16 from a verified sha). Setting it as the GitHub default branch is the owner's (repo Settings); from now on changes reach `main` only through a PR under §8. **Merged is not deployed.**
 - Every hand-off ends with the ladder: branch `<b>` @sha → PR #n → `main` @sha → deploy toibingu.vn: **NOT CONFIRMED**. Verify prints it in its last two lines (`THANG:` / `DEPLOY:`); without a verify run: `git fetch origin && node -e "import('./scripts/harness/lib.mjs').then((m) => console.log(m.deployLadder().join('\n')))"`.
 - **Never say "deployed" or "live".** Only the owner confirms the last rung. How to check the running commit: every app serves `GET /api/version` with commit sha and build time (SD-TBH001 H-13); **NOT LOCKED** until `apps/web` exists.
 - Deploy is the owner's (no environment yet; the hook blocks `vercel --prod` and `fly deploy`).
