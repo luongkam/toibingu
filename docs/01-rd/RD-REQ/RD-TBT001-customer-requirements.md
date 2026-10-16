@@ -150,7 +150,7 @@ Ngôn ngữ: must = bắt buộc, should = nên, can = tùy chọn. Phase: **P1*
   - Từ nhạy cảm (xúc phạm, nhắm vào cá nhân) must được gắn cờ `sensitive`, chỉ giải thích trung lập, không lên trang chủ, không nêu tên người bị nhắm.
 - **Acceptance Criteria:** AC-017.1 Từ chưa duyệt không bao giờ công khai (`trend.test.ts`). AC-017.2 Một người hỏi 20 lần chỉ tính 1 (`discover.test.ts`). AC-017.3 "hỏi tôi có" không khớp "Hội tối cổ" (`match.test.ts`). AC-017.4 Dữ liệu lexicon trong repo hợp lệ (`validateLexicon`, test dữ liệu). AC-017.5 Từ đã có trong lexicon không bị đề xuất lại.
 - **UAT:** Given 5 người dùng khác nhau dán "'ét o ét' là gì", When biên tập viên mở hàng chờ, Then thấy đề xuất "ét o ét" với số người hỏi = 5 và cộng đồng; When duyệt kèm nguồn, Then ô dán khớp được cụm đó.
-- **Traceability:** Upstream: owner 2026-10-16 ("cần 1 skill / engine liên tục update các từ lóng, trend hot trên các nền tảng"), brief §5, research. Downstream: SD-TBH001 (H-15, H-16), SD-TBY001 (Term), SD-TBI001 (IF-08 đến IF-11), `packages/lexicon` tests, `packages/signals/test/asked-terms.test.ts`.
+- **Traceability:** Upstream: owner 2026-10-16 ("cần 1 skill / engine liên tục update các từ lóng, trend hot trên các nền tảng"), brief §5, research. Downstream: SD-TBH001 (H-15, H-16), SD-TBY001 (Term), SD-TBI001 (IF-01, IF-02, IF-08 đến IF-12), `packages/lexicon` tests, `packages/signals/test/asked-terms.test.ts`.
 
 ## 3. Scope (Đối tượng phạm vi)
 

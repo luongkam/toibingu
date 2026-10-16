@@ -8,7 +8,7 @@ export type StoryStatus = "candidate" | "drafting" | "in_review" | "published" |
 /** Communities the pilot tracks. Extend deliberately: each one needs a source plan. */
 export type Community = "meme" | "game" | "tech" | "entertainment" | "sports" | "other";
 
-export type Platform = "threads" | "facebook" | "tiktok" | "youtube" | "x" | "web" | "other";
+export type Platform = "threads" | "facebook" | "instagram" | "tiktok" | "youtube" | "x" | "web" | "other";
 
 export interface Story {
   id: string;

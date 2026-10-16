@@ -8,7 +8,8 @@ description: Use to find new or rising Vietnamese slang, catchphrases, memes and
 Rules: RD-TBT001 REQ-017, SD-TBH001 H-15/H-16, SD-TBP001 P-03 and P-08, AGENTS.md §1 and §5. Data: `data/lexicon/terms.json` (reviewed), `data/lexicon/proposals/<yyyy-mm-dd>.json` (yours to write). Types and checks: `packages/lexicon` (`Term`, `validateLexicon`, `findTerms`, `slugify`).
 
 ## Allowed sources (SD-TBI001 §3; nothing else)
-- Official APIs the project has credentials for (Threads keyword/topic search, YouTube `mostPopular` regionCode=VN, Google Trends RSS geo=VN). No credential → skip that source and say so in the run summary.
+- Official APIs the project has credentials for (SD-TBI001 §3): Threads keyword/topic search, mentions and replies; Instagram hashtag search (30 hashtags / 7 days); TikTok Discovery (if `VN` is supported); Google Trends RSS `https://trends.google.com/trending/rss?geo=VN`. No credential → skip that source and say so in the run summary.
+- YouTube only to find and cite a video as a source; never use YouTube statistics as a heat signal (SD-TBI001 I-06).
 - Public pages read through web search or fetch, one page at a time, as a person would (news explainers, creator posts, TikTok Creative Center trend pages viewed by hand). No bulk crawling, no logging in, no private groups.
 - Context requests exported from the product (`discoverCandidates` output), when available.
 
