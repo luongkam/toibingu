@@ -1,6 +1,6 @@
 // Project settings for the NEXA harness. scripts/harness/{lib,verify,hooks,check-docs}.mjs are verbatim copies of the
 // starter in nexa-v3-2 packages/templates/builtin-claude/skills/nexa-harness-upgrade/assets/harness (copied at
-// nexa-v3-2@2670b71, PR luongkam/nexa-v3-2#431). Never edit those files here: project rules live in this file.
+// nexa-v3-2@6dcca09, master after PR luongkam/nexa-v3-2#431). Never edit those files here: project rules live in this file.
 
 const touched = (re) => ({ files, full }) => full || files.some((f) => re.test(f)) || 'diff không chạm phần này';
 
