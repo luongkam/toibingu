@@ -4,10 +4,12 @@
 - **Goal:** REQ-018: answer people where they are, within what Meta allows.
 - **Why Tier L:** new platform, outbound automated replies, webhooks, Page tokens (AGENTS.md §1).
 - **Platform reality (research 2026-10-16, SD-TBI001 I-11):** untagged comments elsewhere are invisible to the Page; follower status cannot be checked; replying under posts the Page does not moderate is undocumented (likely denied), impossible on profiles and groups.
+- **Tag paths that ARE allowed (docs checked 2026-10-16):** Instagram mentions (webhook `mentions` + `POST /{ig-user-id}/mentions`), Threads mentions + `reply_to_id` (needs `threads_manage_mentions` or `threads_keyword_search`). Facebook personal accounts as bots: rejected (Meta Terms §3.1, §3.2.3).
 - **Done in this PR (no network, Tier S logic):** `packages/fanpage` (`decideReply` T1, `decideMention` T2 with capability gate, `composeReply`), tests.
 
 ## Touch points (after OK)
 - `packages/fanpage/src/graph.ts`: Graph client (reply to comment, private reply, Messenger send) with fake-transport tests; maps error 368 → stop all, permission error on T2 → `capability = denied`.
+- `packages/fanpage/src/{instagram,threads}-mentions.ts`: reply via IF-16 / IF-17 using `decideMention` with `capability: "confirmed"` (documented).
 - `apps/page-bot`: webhook receiver (verify `X-Hub-Signature-256`, `hub.challenge`), parse `feed`/`mention`/`messages`, schedule decisions (2–10 min), persist reply state; runs on the owner machine behind the tunnel (SD-TBH001 H-14).
 - Env only: `FB_PAGE_ID`, `FB_PAGE_TOKEN`, `FB_APP_SECRET`, `FB_VERIFY_TOKEN`, `MENTION_CAPABILITY` (default `unknown`).
 
