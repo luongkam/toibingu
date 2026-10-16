@@ -10,10 +10,10 @@ Requirement (WHAT) lives in `docs/01-rd/RD-REQ/RD-TBT001-customer-requirements.m
 ## Steps
 1. Find the affected `REQ-0nn` (RD §2) and SD docs via the RD §10 Traceability Matrix. New behaviour gets a new `REQ-0nn` with Goal, Behavior, Acceptance Criteria, UAT (Given/When/Then) and Traceability, plus a matrix row.
 2. Decide the phase (P1, P2, NOW-NOT, RD §3–§4). Anything in RD §4 Out of scope needs the owner's OK first.
-3. Update the SD doc of the right type: X context, H architecture/decisions (add a row with reason and "xem lại khi"), N NFR, I integration (limits, failure mode), Y data (entity, retention), P policy. A new SD doc: `SD-TB<letter>NNN-<slug>.md` in its subfolder, `doc_id` frontmatter, `depends_on`, a row in `SD-INDEX.md`.
+3. Update the SD doc of the right type: X context, H architecture/decisions (add a row with reason and "xem lại khi"), N NFR, I integration (limits, failure mode), Y data (entity, retention), P policy. A new SD doc: follow the `nexa-sd-system-design` skill (`.claude/skills/nexa-sd-system-design/SKILL.md`, template per type in its `references/templates/`): `SD-TB<letter>NNN-<slug>.md` in its subfolder, `doc_id` frontmatter, NEXA `status`, `depends_on`, a row in `SD-INDEX.md`.
 4. Tier L topics (AGENTS.md §1: data sources, ranking/publish rules, personal data, contributions, auth, deploy) also need `plans/<yymmdd-hhmm>-<slug>/plan.md` and the owner's OK.
 5. If a business rule changes, update AGENTS.md §6 and the test that locks it in the same PR.
-6. Run `node scripts/ci/check-docs.mjs` (NEXA G1/G1_5, ids, trace), then continue with code and `pnpm verify`.
+6. Run `node scripts/harness/check-docs.mjs` (NEXA starter: G1/G1_5, ids, folders, domain, status, depends_on, em dash; plus Toibingu's REQ trace and no-SQL rules from `harness.config.mjs`), then continue with code and `pnpm verify`.
 
 ## Done when
 - `check-docs` exits 0, every new REQ is in the matrix, every SD cites RD-TBT001.

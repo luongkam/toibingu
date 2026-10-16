@@ -43,7 +43,10 @@ before(() => {
   mkdirSync(join(work, 'scripts/harness'), { recursive: true });
   for (const f of ['lib.mjs', 'verify.mjs', 'hooks.mjs']) cpSync(join(SRC, f), join(work, 'scripts/harness', f));
   const base = existsSync(realConfig) ? `import real from ${JSON.stringify(pathToFileURL(realConfig).href)};\n` : 'const real = {};\n';
-  writeFileSync(join(work, 'scripts/harness/harness.config.mjs'), `${base}export default { ...real, base: 'origin/${PROD[0]}', checks: [] };\n`);
+  // One probe rule, written the plain way (w[0] is the program), proves package runners are unwrapped before match().
+  // It goes first so a project rule for the same command (a real deploy guard) cannot answer before it.
+  const probe = "{ label: 'probe deploy', match: (w) => w[0] === 'vercel' && w.includes('--prod'), message: 'probe: deploy prod' }";
+  writeFileSync(join(work, 'scripts/harness/harness.config.mjs'), `${base}export default { ...real, base: 'origin/${PROD[0]}', checks: [], blockedCommands: [${probe}, ...(real.blockedCommands || [])] };\n`);
   commit('README.md', 'harness test\n');
   git('remote', 'add', 'origin', join(tmp, 'origin.git'));
   for (const b of PROD) git('push', '-q', 'origin', `HEAD:refs/heads/${b}`);
@@ -82,6 +85,16 @@ test('force-push or delete of every prod branch is blocked; feature branches and
   assert.equal(bash(`git commit -m "do not git push -f origin ${PROD[0]}"`).status, 0);
 });
 
+test('blockedCommands see the program behind env, sudo and package runners', () => {
+  for (const cmd of ['vercel --prod', 'npx vercel --prod', 'npx -y vercel --prod', 'npx --yes vercel@latest --prod', 'npx -p vercel vercel --prod',
+    'pnpm dlx vercel --prod', 'pnpm exec vercel --prod', 'yarn dlx vercel --prod', 'bunx vercel --prod', 'env CI=1 npx -y vercel --prod', 'bash -c "pnpm dlx vercel --prod"']) {
+    const r = bash(cmd);
+    assert.equal(r.status, 2, `${cmd} must be blocked: ${r.stderr}`);
+    assert.match(r.stderr, /probe: deploy prod/);
+  }
+  for (const cmd of ['npx vercel --help', 'pnpm dlx vercel', 'pnpm install vercel', 'echo "npx vercel --prod"']) assert.equal(bash(cmd).status, 0, cmd);
+});
+
 test('merge gate fails closed', () => {
   assert.equal(hook('pre-merge', { tool_name: 'mcp__github__merge_pull_request', tool_input: {} }).status, 2);
   const r = hook('pre-merge', { tool_name: 'mcp__github__push_files', tool_input: { branch: PROD[0] } });
@@ -117,7 +130,7 @@ test('Stop reminds once per tree state when code changed without verify', () => 
 const edit = (file) => hook('pre-edit', { tool_name: 'Edit', tool_input: { file_path: join(work, file) }, cwd: work });
 
 test('toibingu: harness engine copies and pnpm-lock.yaml cannot be hand-edited; the config can', () => {
-  for (const f of ['scripts/harness/lib.mjs', 'scripts/harness/verify.mjs', 'scripts/harness/hooks.mjs', 'pnpm-lock.yaml']) {
+  for (const f of ['scripts/harness/lib.mjs', 'scripts/harness/verify.mjs', 'scripts/harness/hooks.mjs', 'scripts/harness/check-docs.mjs', 'pnpm-lock.yaml']) {
     const r = edit(f);
     assert.equal(r.status, 2, `${f} must be protected: ${r.stderr}`);
   }
@@ -129,6 +142,10 @@ test('toibingu: production deploy commands are blocked, previews are not', () =>
   assert.equal(bash('vercel --prod').status, 2);
   assert.equal(bash('npx vercel deploy --prod').status, 2);
   assert.equal(bash('pnpm dlx vercel --prod').status, 2);
+  // The rule is a plain w[0] match; hooks.mjs unwraps package runners (luongkam/nexa-v3-2#427).
+  for (const cmd of ['npx -y vercel --prod', 'npx vercel@latest --prod', 'pnpm exec vercel --prod', 'yarn dlx vercel --prod', 'bunx vercel --prod', 'npx flyctl deploy']) {
+    assert.equal(bash(cmd).status, 2, cmd);
+  }
   assert.equal(bash('fly deploy').status, 2);
   assert.equal(bash('flyctl deploy --remote-only').status, 2);
   assert.equal(bash('vercel').status, 0, 'preview deploys stay allowed');

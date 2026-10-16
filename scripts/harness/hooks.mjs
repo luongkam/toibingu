@@ -54,13 +54,22 @@ function tokens(seg) {
   return out;
 }
 const WRAPPERS = new Set(['env', 'time', 'nice', 'nohup', 'xvfb-run', 'sudo', 'exec', 'command']);
-// Drops `X=1`, `env`, `sudo`, `timeout 60` … in front of the real program.
+// Package runners that start another program: `npx -y vercel`, `pnpm dlx vercel`, `yarn exec x`, `bunx x`.
+const RUNNERS_ONE = new Set(['npx', 'pnpx', 'bunx']);
+const RUNNERS_TWO = new Set(['pnpm dlx', 'pnpm exec', 'yarn dlx', 'yarn exec']);
+const RUNNER_ARG = new Set(['-p', '--package', '-c', '--call']); // options that take a value
+// Drops `X=1`, `env`, `sudo`, `timeout 60`, `npx -y`, `pnpm dlx` … in front of the real program.
 function unwrap(words) {
   let i = 0;
   for (;;) {
     if (/^\w+=/.test(words[i] || '') || WRAPPERS.has(words[i])) i += 1;
     else if (words[i] === 'timeout') i += 2;
-    else return words.slice(i);
+    else if (RUNNERS_ONE.has(words[i]) || RUNNERS_TWO.has(`${words[i]} ${words[i + 1]}`)) {
+      i += RUNNERS_ONE.has(words[i]) ? 1 : 2;
+      while ((words[i] || '').startsWith('-')) i += RUNNER_ARG.has(words[i]) ? 2 : 1;
+      // `npx vercel@latest` runs `vercel`; a scoped `@scope/pkg@1` keeps its scope.
+      if (/^@?[^@]+@/.test(words[i] || '')) words = [...words.slice(0, i), words[i].replace(/^(@?[^@]+)@.*$/, '$1'), ...words.slice(i + 1)];
+    } else return words.slice(i);
   }
 }
 const expandHome = (p) => (p === '~' ? homedir() : p.startsWith('~/') ? join(homedir(), p.slice(2)) : p);
@@ -362,6 +371,8 @@ function writesFiles(command, cwd) {
   return calls(command, cwd).some(({ words: w }) => {
     const p = basename(w[0] || '');
     if (WRITERS.has(p)) return true;
+    // `npx prettier --write` reaches here as `prettier --write` (runners are unwrapped).
+    if (w.some((a) => a === '--write' || a === '--fix')) return true;
     if (p === 'sed') return w.some((a) => /^-[a-zA-Z]*i|^--in-place/.test(a));
     if (p === 'git') return GIT_WRITES.has(gitCall({ words: w, dir: ROOT })?.sub);
     if (['npm', 'pnpm', 'yarn'].includes(p)) return w.some((a) => ['ci', 'i', 'install', 'uninstall', 'update', 'build', 'add'].includes(a));
